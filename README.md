@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pokemon Explorer
 
-## Getting Started
+## 📌 Overview
+Pokemon Explorer is a responsive web application built with Next.js that allows users to explore various Pokémon fetched from the PokeAPI. The app provides a search feature to filter Pokémon by name and detailed pages displaying their abilities, types, and stats.
 
-First, run the development server:
+## 🚀 Features
+- **Homepage:** Displays a list of Pokémon fetched from PokeAPI.
+- **Search Functionality:** Allows users to search for Pokémon by name.
+- **Detail Page:** Provides an overview of selected Pokémon, including images, types, abilities, and stats.
+- **Optimized Performance:** Utilizes static site generation (SSG) for faster loading times.
 
+## 🛠 Tech Stack
+- **Framework:** Next.js (App Router)
+- **Styling:** Tailwind CSS
+- **API:** PokeAPI (https://pokeapi.co/)
+- **Icons:** react-icons
+
+## 🔧 Installation & Setup
+
+### 1️⃣ Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/pratheek5299/pokemon-task.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install Dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 3️⃣ Run the Development Server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4️⃣ Open the Application
+By default, the app runs on `http://localhost:3000`.
 
-## Learn More
+## 📸 Screenshots
+![Homepage Screenshot](https://github.com/user-attachments/assets/31604fea-f519-4c71-ae58-e48bd8fe42fb)
+![Pokemon Detail Page](https://github.com/user-attachments/assets/3e32b62c-f45c-4388-87c1-f8e282b68f1f)
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏗 Project Structure
+```
+/pokemon-task
+│── src
+│   ├── app
+│   │   ├── page.js  # Homepage listing all Pokémon
+│   │   ├── pokemon
+│   │   │   ├── [id]
+│   │   │   │   ├── page.js  # Dynamic Pokémon detail page
+│   ├── components
+│── public
+│── next.config.js
+│── package.json
+│── README.md
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔥 Deployment
+To build and export the project for static hosting:
+```bash
+npm run build && npm run export
+```
 
-## Deploy on Vercel
+## 🛠 Configuration
+To allow Next.js to fetch images from external sources, update `next.config.js`:
+```js
+module.exports = {
+  images: {
+    domains: ["raw.githubusercontent.com"],
+  },
+};
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👨‍💻 Author
+- **[Pratheek](https://github.com/pratheek5299)**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+---
+
+
