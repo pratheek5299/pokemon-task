@@ -42,7 +42,8 @@ export default function PokemonList({ pokemons }) {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-8">
         {filteredPokemons.length > 0 ? (
           filteredPokemons.map((pokemon, index) => {
-            const pokemonId = index + 1;
+            const pokemonId = pokemon.url.split("/")[6];
+            console.log('Pokemon ID', pokemonId);
             return (
               <Link key={pokemonId} href={`/pokemon/${pokemonId}`}>
                 <div
@@ -50,7 +51,7 @@ export default function PokemonList({ pokemons }) {
                 hover:shadow-xl transition-all duration-300 ease-in-out 
                 transform hover:-translate-y-1  hover:-translate-x-1  cursor-pointer text-center"
                 >
-                  {/* Pokémon Image */}
+                  {console.log('Pokemon', pokemon)}
                   {/* <div className="relative w-24 h-24 mx-auto">
                     <Image
                       src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}
