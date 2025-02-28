@@ -1,65 +1,77 @@
 "use client";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { Luckiest_Guy, Bangers } from "next/font/google";
+import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { FaSearch } from "react-icons/fa";
+
+import { Luckiest_Guy } from "next/font/google";
 
 const luckiestGuy = Luckiest_Guy({ subsets: ["latin"], weight: ["400"] });
-const bangers = Bangers({ subsets: ["latin"], weight: ["400"] });
 
-export default function PokemonList() {
-  const [pokemonList, setPokemonList] = useState([]);
+export default function PokemonList({ pokemons }) {
+  const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    const fetchPokemonData = async () => {
-      const toastId = toast.loading("Fetching the pokemon data...");
-      try {
-        const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
-        );
-        if (!response.ok) {
-          toast.error("Failed to fetch the pokemon data", { id: toastId });
-        }
-        const data = await response.json();
-        console.log("Pokemon data: ", data.results);
-        setPokemonList(data.results);
-        toast.success("Successfully fetched the pokemon data", { id: toastId });
-      } catch (error) {
-        console.log("Error while fetching the pokemon data: ", error);
-        toast.error("Failed to fetch the pokemon data", { id: toastId });
-      }
-    };
-
-    fetchPokemonData();
-  }, []);
+  // Filter Pokémon by search term
+  const filteredPokemons = pokemons.filter((pokemon) =>
+    pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="max-w-[1536px] mx-auto px-[1rem] md:px-[2rem] lg:px-[3rem] xl:px-[4rem] py-10">
-      <Toaster />
+      {/* Title */}
       <h1
-        className={`${luckiestGuy.className}  text-[4rem] text-[#ffcb06] drop-shadow-[4px_4px_0px_rgb(48,109,179)]  text-center `}
+        className={`text-[4rem] drop-shadow-[3px_3px_0px_rgb(47,110,180)] font-bold text-center text-yellow-400 
+           font-luckiest-guy ${luckiestGuy.className} mb-6`}
       >
-        Explore the Pokemon
+        Explore Pokémon
       </h1>
-      <div className="text-right bg-[red] w-fit ml-auto px-4 py-2">
-        <input placeholder="Search your pokemon" className=" bg-[green] " />
+
+      {/* Search Bar */}
+      <div className="flex items-center bg-white shadow-md rounded-full px-4 py-2 w-full max-w-xl mx-auto">
+        <FaSearch className="text-gray-500" />
+        <input
+          type="text"
+          placeholder="Search Pokémon..."
+          className="ml-2 w-full outline-none text-gray-700"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
-      <div className="grid py-10 grid-cols-6 gap-4 ">
-        {pokemonList.map((pokemon, index) => (
-          <div
-            className=" bg-yellow-400 hover:shadow-[2px_4px_5px_2px_rgb(48,109,179)] flex items-center justify-center
-             rounded-[12px] transition-all hover:-translate-x-2 cursor-pointer hover:-translate-y-2 duration-300 
-             ease-in-out p-6 capitalize"
-            key={index}
-          >
-            <Link href={`/pokemon/${index + 1}`}>
-              <p className={`${bangers.className} text-[18px]`}>
-                {pokemon.name}
-              </p>
-            </Link>
-          </div>
-        ))}
+
+      {/* Pokémon Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-8">
+        {filteredPokemons.length > 0 ? (
+          filteredPokemons.map((pokemon, index) => {
+            const pokemonId = index + 1;
+            return (
+              <Link key={pokemonId} href={`/pokemon/${pokemonId}`}>
+                <div
+                  className="group bg-yellow-300 p-4 rounded-lg 
+                hover:shadow-xl transition-all duration-300 ease-in-out 
+                transform hover:-translate-y-1  hover:-translate-x-1  cursor-pointer text-center"
+                >
+                  {/* Pokémon Image */}
+                  {/* <div className="relative w-24 h-24 mx-auto">
+                    <Image
+                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}
+                      alt={pokemon.name}
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div> */}
+                  {/* Pokémon Name */}
+                  <p
+                    className={`${luckiestGuy.className} mt-2 text-xl font-semibold capitalize text-[rgb(47,110,180)] group-hover:text-`}
+                  >
+                    {pokemon.name}
+                  </p>
+                </div>
+              </Link>
+            );
+          })
+        ) : (
+          <p className="text-center text-gray-500 mt-4">No Pokémon found</p>
+        )}
       </div>
     </div>
   );
